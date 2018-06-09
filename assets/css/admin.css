@@ -1,0 +1,23 @@
+/* Modifications for admin styling */
+
+.fm-item-description {
+    font-style: normal;
+    font-weight: 600;
+    margin: 1em 0;
+}
+
+.fm-option {
+    margin-bottom: 0.5em;
+}
+
+.fm-option input[type=checkbox],
+.fm-option input[type=radio] {
+    margin-top: 0;
+}
+
+.fm-label > label {
+    display: block;
+    font-size: 120%;
+    font-weight: 700;
+    margin-top: 2em;
+}

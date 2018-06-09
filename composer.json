@@ -1,0 +1,38 @@
+{
+    "name": "damonsharp/plugin-collections",
+    "description": "WordPress plugin that allows you to create collections of plugins to activate together, allowing you to easily switch between groups of activated plugins for testing, etc.",
+    "type": "project",
+    "license": "GLP2",
+    "authors": [
+        {
+            "name": "Damon Sharp",
+            "email": "damon.sharp@gmail.com"
+        }
+    ],
+    "require": {
+        "alleyinteractive/wordpress-fieldmanager": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/damonsharp/wordpress-fieldmanager.git"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "includes"
+        ],
+        "files": [
+            "includes/functions.php",
+            "vendor/wordpress-fieldmanager/fieldmanager.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "installer-paths": {
+            "vendor/{$name}": [
+                "alleyinteractive/wordpress-fieldmanager"
+            ]
+        }
+    }
+}
