@@ -41,40 +41,43 @@ if ( ! defined( 'DWSPC_WP_REQUIREMENT' ) ) {
 // Load the requirements class.
 require_once DWSPC_INC_DIR . 'class-plugin-requirements.php';
 
-// Check plugin requirements.
-$requirements = new Plugin_Requirements(
-	[
+function dwspc_check_plugin_requirements() {
+
+	// Check plugin requirements.
+	$requirements = new Plugin_Requirements( [
 		'plugin_name'        => 'Plugin Collections',
 		'php_version'        => '5.6',
 		'wp_version'         => '4.9',
 		'plugin_file'        => __FILE__,
 		'php_server_version' => phpversion(),
 		'wp_server_version'  => get_bloginfo( 'version' ),
-	]
-);
+	] );
 
-if ( $requirements->plugin_requirements_met() ) {
+	if ( $requirements->plugin_requirements_met() ) {
 
-	// Make sure we can check for another instance of Fieldmanager and only load
-	// ours if another one doesn't exist.
-	add_action( 'plugins_loaded', function () {
-		/**
-		 * Load necessary files.
-		 */
-		if ( ! class_exists( 'Fieldmanager_Field' ) ) {
-			require_once DWSPC_INC_DIR . 'libs/wordpress-fieldmanager/fieldmanager.php';
-		}
-		require_once DWSPC_INC_DIR . 'functions.php';
-		require_once DWSPC_INC_DIR . 'class-plugin-collections-base.php';
-		require_once DWSPC_INC_DIR . 'class-data-structures.php';
-		require_once DWSPC_INC_DIR . 'class-post-types.php';
-		require_once DWSPC_INC_DIR . 'class-bulk-plugin-actions.php';
+		// Make sure we can check for another instance of Fieldmanager and only load
+		// ours if another one doesn't exist.
+		add_action( 'plugins_loaded', function () {
+			/**
+			 * Load necessary files.
+			 */
+			if ( ! class_exists( 'Fieldmanager_Field' ) ) {
+				require_once DWSPC_INC_DIR . 'libs/wordpress-fieldmanager/fieldmanager.php';
+			}
+			require_once DWSPC_INC_DIR . 'functions.php';
+			require_once DWSPC_INC_DIR . 'class-plugin-collections-base.php';
+			require_once DWSPC_INC_DIR . 'class-data-structures.php';
+			require_once DWSPC_INC_DIR . 'class-post-types.php';
+			require_once DWSPC_INC_DIR . 'class-bulk-plugin-actions.php';
 
-		/**
-		 * Get things started.
-		 */
-		( new Plugin_Collections_Base() )->init();
+			/**
+			 * Get things started.
+			 */
+			( new Plugin_Collections_Base() )->init();
 
-	}, 99 );
+		}, 99 );
 
+	}
 }
+
+dwspc_check_plugin_requirements();

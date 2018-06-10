@@ -132,7 +132,7 @@ class Plugin_Requirements {
 	public function php_requirement_notice() {
 		new Admin_Notice(
 			// translators: PHP version number requirement message.
-			sprintf( __( '%1$s requires PHP version %2$s. You are running %3$s. Please discuss upgrade options with your hosting provider. WordPress recommends PHP version 7+.', 'dwspc' ), $this->plugin_name, $this->php_version, $this->php_server_version )
+			sprintf( __( '%1$s requires PHP version %2$s+. You are running version %3$s. Please discuss upgrade options with your hosting provider. WordPress recommends PHP version 7+.', 'dwspc' ), $this->plugin_name, $this->php_version, $this->php_server_version )
 		);
 	}
 
@@ -159,7 +159,7 @@ class Plugin_Requirements {
 	public function wp_requirement_notice() {
 		new Admin_Notice(
 			// translators: WordPress version number requirement message.
-			sprintf( __( '%1$s requires WP version %2$s. You are running WordPress %3$s. Please upgrade and reactivate.', 'dwspc' ), $this->plugin_name, $this->wp_version, $this->wp_server_version )
+			sprintf( __( '%1$s requires WP version %2$s+. You are running WordPress version %3$s. Please upgrade and reactivate.', 'dwspc' ), $this->plugin_name, $this->wp_version, $this->wp_server_version )
 		);
 	}
 
