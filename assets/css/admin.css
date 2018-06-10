@@ -21,3 +21,7 @@
     font-weight: 700;
     margin-top: 2em;
 }
+
+.dwspc-inner {
+    max-width: 70%;
+}

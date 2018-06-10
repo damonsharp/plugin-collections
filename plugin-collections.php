@@ -6,7 +6,7 @@
  * you to easily switch between groups of activated plugins for testing, etc.
  * Author:          Damon Sharp
  * Author URI:      https://damonsharp.me
- * Text Domain:     plugin-collections
+ * Text Domain:     dwspc
  * Domain Path:     /languages
  * Version:         1.0.0
  *

@@ -49,7 +49,7 @@ class Data_Structures extends Plugin_Collections_Base {
 			register_post_type(
 				$post_type_slug, wp_parse_args(
 					[
-						'description'           => __( 'Custom post type.', $this->plugin_slug ),
+						'description'           => __( 'Custom post type.', 'dwspc' ),
 						'public'                => true,
 						'exclude_from_search'   => true,
 						'publicly_queryable'    => false,

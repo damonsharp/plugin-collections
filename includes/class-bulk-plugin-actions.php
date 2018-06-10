@@ -64,7 +64,7 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 	 */
 	public function modify_plugin_collection_name( $plugin_collections ) {
 		foreach ( $plugin_collections as $id => $name ) {
-			$plugin_collections[ $id ] = sprintf( __( 'Activate %s Collection', $this->plugin_slug ), $name );
+			$plugin_collections[ $id ] = sprintf( __( 'Activate %s Collection', 'dwspc' ), $name );
 		}
 
 		return $plugin_collections;
