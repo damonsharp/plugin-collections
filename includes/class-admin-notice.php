@@ -31,7 +31,7 @@ class Admin_Notice {
 	 * Constructor.
 	 *
 	 * @param string $notice The notice text.
-	 * @param string $type The message type.
+	 * @param string $type   The message type.
 	 *
 	 * @since 1.0.0
 	 */

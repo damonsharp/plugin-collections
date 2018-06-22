@@ -156,7 +156,7 @@ class Data_Structures extends Plugin_Collections_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string $taxonomy the taxonomy type.
-	 * @param array  $args array of taxonomy args.
+	 * @param array  $args     array of taxonomy args.
 	 */
 	public function add_taxonomy( $taxonomy, $args ) {
 		$this->taxonomies[ $taxonomy ] = $args;

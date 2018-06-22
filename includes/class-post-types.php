@@ -2,6 +2,7 @@
 
 namespace Sharp_Plugin_Collections;
 
+
 class Post_Types extends Plugin_Collections_Base {
 
 	/**
@@ -38,8 +39,8 @@ class Post_Types extends Plugin_Collections_Base {
 	 */
 	public function __construct() {
 		$this->data_structures = new Data_Structures();
-		$this->plugins_list = get_plugins_array();
-		$this->themes_list = get_themes_array();
+		$this->plugins_list    = get_plugins_array();
+		$this->themes_list     = get_themes_array();
 		$this->init();
 	}
 
@@ -98,7 +99,7 @@ class Post_Types extends Plugin_Collections_Base {
 	 */
 	public function add_themes_meta_box() {
 		$current_theme = wp_get_theme();
-		$fm = new \Fieldmanager_Radios(
+		$fm            = new \Fieldmanager_Radios(
 			[
 				'name'                      => 'dws_collection_theme',
 				'description'               => __( 'Custom post type used to create plugin collections.', 'dwspc' ),
@@ -120,7 +121,7 @@ class Post_Types extends Plugin_Collections_Base {
 	 * @return \Fieldmanager_Datasource $plugins_data_source
 	 */
 	private function get_plugins_datasource() {
-		// Remove Plugin Collectsions from list as it will always stay activated.
+		// Remove Plugin Collections from list as it will always stay activated.
 		if ( isset( $this->plugins_list['plugin-collections/plugin-collections.php'] ) ) {
 			unset( $this->plugins_list['plugin-collections/plugin-collections.php'] );
 		}
@@ -164,9 +165,9 @@ class Post_Types extends Plugin_Collections_Base {
 	public function plugins_collections_table_columns( $columns ) {
 		$date_column = $columns['date'];
 		unset( $columns['date'] );
-		$columns["{$this->plugin_slug}_plugins"] = __( 'Plugins in Collection', 'dwspc' );
-		$columns["{$this->plugin_slug}_theme"] = __( 'Theme', 'dwspc' );
-		$columns['date'] = $date_column;
+		$columns[ "{$this->plugin_slug}_plugins" ] = __( 'Plugins in Collection', 'dwspc' );
+		$columns[ "{$this->plugin_slug}_theme" ]   = __( 'Theme', 'dwspc' );
+		$columns['date']                           = $date_column;
 
 		return $columns;
 	}
@@ -228,6 +229,7 @@ class Post_Types extends Plugin_Collections_Base {
 			<div class="dwspc-inner">
 				<h2><?php esc_html_e( 'About Plugin Collections', 'dwspc' ); ?></h2>
 				<p><?php esc_html_e( "Plugin collections allows you to easily create saved collections of plugins to activate along with a theme. Once created, these collections can be selected from the plugin admin screen's Bulk Action menu. Once selected and applied the plugins in the selected collection will be activated along with your the collection's chosen theme and all other plugins except this one will be deactivated. Here's a quick walkthrough video...", 'dwspc' ); ?></p>
+				<iframe width="853" height="480" src="https://www.youtube.com/embed/HkbIPCUtY0U?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 				<p><?php esc_html_e( "NOTE: Each plugin and the theme contained in the applied collection will only be activated if it is currently installed.", 'dwspc' ); ?></p>
 				<p><?php esc_html_e( "Plugin collections can be useful if there's a need for the following:", 'dwspc' ); ?></p>
 				<ol>

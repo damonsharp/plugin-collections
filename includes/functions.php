@@ -12,7 +12,7 @@ namespace Sharp_Plugin_Collections;
  *
  * @since 1.0.0
  *
- * @param string $slug The slug.
+ * @param string $slug       The slug.
  * @param bool   $capitalize Should the titme be capitalized.
  *
  * @return string Title created from slug.

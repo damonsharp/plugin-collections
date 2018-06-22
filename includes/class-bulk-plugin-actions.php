@@ -64,6 +64,7 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 	 */
 	public function modify_plugin_collection_name( $plugin_collections ) {
 		foreach ( $plugin_collections as $id => $name ) {
+			// translators: %s represents the name of the plugin collection.
 			$plugin_collections[ $id ] = sprintf( __( 'Activate %s Collection', 'dwspc' ), $name );
 		}
 
@@ -76,7 +77,7 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string|boolean $redirect_url Either the redirect URL or false.
-	 * @param string         $doaction The action/value from the selected menu item.
+	 * @param string         $doaction     The action/value from the selected menu item.
 	 *
 	 * @return string|boolean $redirect_url
 	 */
