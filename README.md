@@ -10,19 +10,10 @@
 
 Easily create collections of plugins to activate together, along with a specific theme if needed. Easily switch collections from the plugin bulk actions menu.
 
-## Description ##
-
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
-
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
-
 ## Installation ##
 
 1. Use the Plugins > Add new to install from the [WordPress.org](https://wordpress.org) repository by searching for "Plugin Collections".
 2. Use Plugins > Add new > Upload Plugin button to upload the a .zip of the plugin files. This can be obtained from GitHub [https://github.com/damonsharp/plugin-collections.git](https://github.com/damonsharp/plugin-collections.git), or 
-
-
 
 ## Frequently Asked Questions ##
 
