@@ -92,6 +92,27 @@ class Post_Types extends Plugin_Collections_Base {
 	}
 
 	/**
+	 * Get datasouce for plugins.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return Fieldmanager_Datasource $plugins_data_source
+	 */
+	private function get_plugins_datasource() {
+		// Remove Plugin Collections from list as it will always stay activated.
+		if ( isset( $this->plugins_list['plugin-collections/plugin-collections.php'] ) ) {
+			unset( $this->plugins_list['plugin-collections/plugin-collections.php'] );
+		}
+		$plugins_data_source = new \Fieldmanager_Datasource(
+			[
+				'options' => $this->plugins_list,
+			]
+		);
+
+		return $plugins_data_source;
+	}
+
+	/**
 	 * Fieldmanager callback method for adding Fieldmanager metabox
 	 * for theme options.
 	 *
@@ -114,32 +135,11 @@ class Post_Types extends Plugin_Collections_Base {
 	}
 
 	/**
-	 * Get datasouce for plugins.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return \Fieldmanager_Datasource $plugins_data_source
-	 */
-	private function get_plugins_datasource() {
-		// Remove Plugin Collections from list as it will always stay activated.
-		if ( isset( $this->plugins_list['plugin-collections/plugin-collections.php'] ) ) {
-			unset( $this->plugins_list['plugin-collections/plugin-collections.php'] );
-		}
-		$plugins_data_source = new \Fieldmanager_Datasource(
-			[
-				'options' => $this->plugins_list,
-			]
-		);
-
-		return $plugins_data_source;
-	}
-
-	/**
 	 * Get datasouce for themes.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return \Fieldmanager_Datasource $themes_data_source
+	 * @return Fieldmanager_Datasource $themes_data_source
 	 */
 	private function get_themes_datasource() {
 		$themes_data_source = new \Fieldmanager_Datasource(
@@ -165,9 +165,9 @@ class Post_Types extends Plugin_Collections_Base {
 	public function plugins_collections_table_columns( $columns ) {
 		$date_column = $columns['date'];
 		unset( $columns['date'] );
-		$columns[ "{$this->plugin_slug}_plugins" ] = __( 'Plugins in Collection', 'dwspc' );
-		$columns[ "{$this->plugin_slug}_theme" ]   = __( 'Theme', 'dwspc' );
-		$columns['date']                           = $date_column;
+		$columns["{$this->plugin_slug}_plugins"] = __( 'Plugins in Collection', 'dwspc' );
+		$columns["{$this->plugin_slug}_theme"]   = __( 'Theme', 'dwspc' );
+		$columns['date']                         = $date_column;
 
 		return $columns;
 	}

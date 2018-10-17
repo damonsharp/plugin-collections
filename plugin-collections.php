@@ -61,7 +61,7 @@ function dwspc_check_plugin_requirements() {
 			/**
 			 * Load necessary files.
 			 */
-			if ( ! class_exists( 'Fieldmanager_Field' ) ) {
+			if ( ! class_exists( '\Fieldmanager_Field' ) ) {
 				require_once DWSPC_INC_DIR . 'libs/wordpress-fieldmanager/fieldmanager.php';
 			}
 			require_once DWSPC_INC_DIR . 'functions.php';
