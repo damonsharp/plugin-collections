@@ -37,5 +37,5 @@ and switch between them.
 
 ## Changelog ##
 
-### 1.0.0 - May 15, 2018 ###
+### 1.0.0 - January 20, 2019 ###
 * Initial release.
