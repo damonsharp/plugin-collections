@@ -62,93 +62,88 @@ class Post_Types extends Plugin_Collections_Base {
 			]
 		);
 
-		add_action( "fm_post_{$this->plugin_slug}", [ $this, 'add_plugins_meta_box' ] );
-		add_action( "fm_post_{$this->plugin_slug}", [ $this, 'add_themes_meta_box' ] );
+		add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
 		add_filter( "manage_edit-{$this->plugin_slug}_columns", [ $this, 'plugins_collections_table_columns' ] );
 		add_action( "manage_{$this->plugin_slug}_posts_custom_column", [
 			$this,
 			'plugins_collections_table_column_data',
 		], 10, 2 );
 		add_action( 'admin_menu', [ $this, 'add_plugins_collections_sub_pages' ] );
+		add_action( 'save_post', [ $this, 'save_plugin_collection_meta'] );
 	}
 
 	/**
-	 * Fieldmanager callback method for adding Fieldmanager Fields to
-	 * custom post type.
+	 * Add post meta boxes.
 	 *
 	 * @since 1.0.0
 	 */
-	public function add_plugins_meta_box() {
-		$fm = new \Fieldmanager_Checkboxes(
-			[
-				'name'                      => 'dws_plugin_collections',
-				'datasource'                => $this->get_plugins_datasource(),
-				'description'               => __( 'Plugins checked below will be activated when applying this collection on the plugins admin page. All others will be deactivated.', 'dwspc' ),
-				'description_after_element' => false,
-			]
+	public function add_meta_boxes() {
+		add_meta_box(
+			'dws_plugin_collections',
+			__( 'Available Plugins', 'dwspc' ),
+			[ $this, 'plugins_meta_box_html' ],
+			$this->plugin_slug,
+			'normal',
+			'default'
 		);
 
-		$fm->add_meta_box( __( 'Available Plugins', 'dwspc' ), $this->plugin_slug );
+		add_meta_box(
+			'dws_collections_theme',
+			__( 'Available Themes', 'dwspc' ),
+			[ $this, 'themes_meta_box_html' ],
+			$this->plugin_slug,
+			'normal',
+			'default'
+		);
 	}
 
 	/**
-	 * Get datasouce for plugins.
+	 * Callback method for adding meta box for theme options.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return Fieldmanager_Datasource $plugins_data_source
 	 */
-	private function get_plugins_datasource() {
-		// Remove Plugin Collections from list as it will always stay activated.
-		if ( isset( $this->plugins_list['plugin-collections/plugin-collections.php'] ) ) {
-			unset( $this->plugins_list['plugin-collections/plugin-collections.php'] );
+	public function themes_meta_box_html() {
+		global $post;
+		if ( empty( $post ) ) {
+			return;
 		}
-		$plugins_data_source = new \Fieldmanager_Datasource(
-			[
-				'options' => $this->plugins_list,
-			]
-		);
-
-		return $plugins_data_source;
+		$current_theme = get_template();
+		$current_collection_theme = get_post_meta( $post->ID, 'dws_collection_theme', true );
+		$comparison = ( ! empty( $current_collection_theme ) ) ? $current_collection_theme : $current_theme;
+		if ( ! empty( $this->themes_list ) ) {
+			foreach ( $this->themes_list as $key => $theme ) {
+				?>
+				<label class="<?php echo esc_attr( "{$this->plugin_slug}-item" ); ?>" for="<?php echo esc_attr( $key ); ?>">
+					<input id="<?php echo esc_attr( $key ); ?>" type="radio" name="dws_collection_theme" value="<?php echo esc_attr( $key ); ?>" <?php checked( $comparison === $key ); ?>>
+					<?php echo esc_html( $theme ); ?>
+				</label>
+				<?php
+			}
+		}
 	}
 
 	/**
-	 * Fieldmanager callback method for adding Fieldmanager metabox
-	 * for theme options.
+	 * Callback method for adding meta box for plugin options.
 	 *
 	 * @since 1.0.0
 	 */
-	public function add_themes_meta_box() {
-		$current_theme = wp_get_theme();
-		$fm            = new \Fieldmanager_Radios(
-			[
-				'name'                      => 'dws_collection_theme',
-				'description'               => __( 'Custom post type used to create plugin collections.', 'dwspc' ),
-				'datasource'                => $this->get_themes_datasource(),
-				'description'               => __( 'The theme selected below will be activated when applying this collection. Current active theme shown on page load.', 'dwspc' ),
-				'description_after_element' => false,
-				'default_value'             => $current_theme->get_template(),
-			]
-		);
-
-		$fm->add_meta_box( __( 'Available Themes', 'dwspc' ), $this->plugin_slug );
-	}
-
-	/**
-	 * Get datasouce for themes.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return Fieldmanager_Datasource $themes_data_source
-	 */
-	private function get_themes_datasource() {
-		$themes_data_source = new \Fieldmanager_Datasource(
-			[
-				'options' => $this->themes_list,
-			]
-		);
-
-		return $themes_data_source;
+	public function plugins_meta_box_html() {
+		global $post;
+		if ( empty( $post ) ) {
+			return;
+		}
+		$current_plugin_collection = get_post_meta( $post->ID, 'dws_plugin_collections', true );
+		$this->prepare_plugins_datasource();
+		if ( ! empty( $this->plugins_list ) ) {
+			foreach ( $this->plugins_list as $key => $plugin ) {
+				?>
+				<label class="<?php echo esc_attr( "{$this->plugin_slug}-item" ); ?>" for="<?php echo esc_attr( $key ); ?>">
+					<input id="<?php echo esc_attr( $key ); ?>" type="checkbox" name="dws_plugin_collections[]" value="<?php echo esc_attr( $key ); ?>" <?php checked( in_array( $key, (array) $current_plugin_collection, true ) ); ?>>
+					<?php echo esc_html( $plugin ); ?>
+				</label>
+				<?php
+			}
+		}
 	}
 
 	/**
@@ -243,6 +238,29 @@ class Post_Types extends Plugin_Collections_Base {
 			</div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Prepare datasouce for plugins.
+	 *
+	 * @since 1.0.0
+	 */
+	private function prepare_plugins_datasource() {
+		// Remove Plugin Collections from list as it will always stay activated.
+		if ( isset( $this->plugins_list['plugin-collections/plugin-collections.php'] ) ) {
+			unset( $this->plugins_list['plugin-collections/plugin-collections.php'] );
+		}
+	}
+
+	public function save_plugin_collection_meta( $post_id ) {
+		if ( ! isset( $_POST['dws_plugin_collections'] ) && ! isset( $_POST['dws_collection_theme'] ) ) {
+			return;
+		}
+		$dws_plugin_collections = array_map( 'sanitize_text_field', $_POST['dws_plugin_collections'] );
+		$dws_collection_theme = sanitize_text_field( $_POST['dws_collection_theme'] );
+
+		update_post_meta( $post_id, 'dws_plugin_collections', $dws_plugin_collections );
+		update_post_meta( $post_id, 'dws_collection_theme', $dws_collection_theme );
 	}
 
 }

@@ -49,7 +49,7 @@ class Admin_Notice {
 	public function display_notice() {
 		?>
 		<div class="notice notice-<?php echo esc_attr( $this->type ); ?> is-dismissible">
-			<p><?php esc_html_e( sprintf( '%s', $this->notice ), 'announcewp' ); ?></p>
+			<p><?php esc_html_e( sprintf( '%s', $this->notice ), 'dwspc' ); ?></p>
 		</div>
 		<?php
 	}
