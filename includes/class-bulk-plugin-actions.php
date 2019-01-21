@@ -114,8 +114,12 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 		$collection_theme = get_post_meta( $doaction, 'dws_collection_theme', true );
 		$current_theme    = wp_get_theme();
 		$current_theme    = $current_theme->get_template();
-		if ( ! empty( $collection_theme ) && $collection_theme !== $current_theme ) {
-			switch_theme( $collection_theme );
+		try {
+			if ( ! empty( $collection_theme ) && ! empty( $current_theme ) && $collection_theme !== $current_theme ) {
+				switch_theme( $collection_theme );
+			}
+		} catch ( \Exception $exception ) {
+			new Admin_Notice( $exception->getMessage() );
 		}
 
 		return admin_url( 'plugins.php' );

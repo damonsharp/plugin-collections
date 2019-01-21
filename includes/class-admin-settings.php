@@ -10,15 +10,6 @@ namespace Sharp_Plugin_Collections;
 class Admin_Settings {
 
 	/**
-	 * The setting name.
-	 *
-	 * @var string
-	 *
-	 * @since 1.0.0
-	 */
-	public $setting_name = ;
-
-	/**
 	 * The settings.
 	 *
 	 * @var array
@@ -30,14 +21,10 @@ class Admin_Settings {
 	/**
 	 * Constructor.
 	 *
-	 * @param string $notice The notice text.
-	 * @param string $type   The message type.
-	 *
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		$this->settings = get_option;
-		$this->type   = $type;
+		$this->type     = $type;
 		$this->display_notice();
 	}
 

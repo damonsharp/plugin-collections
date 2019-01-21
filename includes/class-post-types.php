@@ -132,13 +132,13 @@ class Post_Types extends Plugin_Collections_Base {
 		if ( empty( $post ) ) {
 			return;
 		}
-		$current_plugin_collection = get_post_meta( $post->ID, 'dws_plugin_collections', true );
+		$current_plugin_collection = (array) get_post_meta( $post->ID, 'dws_plugin_collections', true );
 		$this->prepare_plugins_datasource();
 		if ( ! empty( $this->plugins_list ) ) {
 			foreach ( $this->plugins_list as $key => $plugin ) {
 				?>
 				<label class="<?php echo esc_attr( "{$this->plugin_slug}-item" ); ?>" for="<?php echo esc_attr( $key ); ?>">
-					<input id="<?php echo esc_attr( $key ); ?>" type="checkbox" name="dws_plugin_collections[]" value="<?php echo esc_attr( $key ); ?>" <?php checked( in_array( $key, $current_plugin_collection ) ); ?>>
+					<input id="<?php echo esc_attr( $key ); ?>" type="checkbox" name="dws_plugin_collections[]" value="<?php echo esc_attr( $key ); ?>" <?php checked( in_array( $key, $current_plugin_collection, true ) ); ?>>
 					<?php echo esc_html( $plugin ); ?>
 				</label>
 				<?php
