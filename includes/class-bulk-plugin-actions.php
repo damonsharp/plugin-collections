@@ -101,12 +101,12 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 
 		foreach ( $plugin_collections as $file ) {
 			// Don't try to activate a plugin that isn't already installed.
-			if ( in_array( $file, $all_plugins ) ) {
-				try {
+			try {
+				if ( in_array( $file, $all_plugins ) ) {
 					activate_plugin( $file );
-				} catch ( \Exception $exception ) {
-					new Admin_Notice( $exception->getMessage() );
 				}
+			} catch ( \Exception $exception ) {
+				new Admin_Notice( $exception->getMessage() );
 			}
 		}
 
