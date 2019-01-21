@@ -102,12 +102,16 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 		foreach ( $plugin_collections as $file ) {
 			// Don't try to activate a plugin that isn't already installed.
 			if ( in_array( $file, $all_plugins ) ) {
-				activate_plugin( $file );
+				try {
+					activate_plugin( $file );
+				} catch ( \Exception $exception ) {
+					new Admin_Notice( $exception->getMessage() );
+				}
 			}
 		}
 
 		// Possibly switch theme based on collection selection.
-		$collection_theme = get_post_meta( $doaction, 'dws_theme_collections', true );
+		$collection_theme = get_post_meta( $doaction, 'dws_collection_theme', true );
 		$current_theme    = wp_get_theme();
 		$current_theme    = $current_theme->get_template();
 		if ( ! empty( $collection_theme ) && $collection_theme !== $current_theme ) {

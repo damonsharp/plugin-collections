@@ -55,15 +55,7 @@ function dwspc_check_plugin_requirements() {
 
 	if ( $requirements->plugin_requirements_met() ) {
 
-		// Make sure we can check for another instance of Fieldmanager and only load
-		// ours if another one doesn't exist.
 		add_action( 'plugins_loaded', function () {
-			/**
-			 * Load necessary files.
-			 */
-			if ( ! class_exists( '\Fieldmanager_Field' ) ) {
-				require_once DWSPC_INC_DIR . 'libs/wordpress-fieldmanager/fieldmanager.php';
-			}
 			require_once DWSPC_INC_DIR . 'functions.php';
 			require_once DWSPC_INC_DIR . 'class-plugin-collections-base.php';
 			require_once DWSPC_INC_DIR . 'class-data-structures.php';

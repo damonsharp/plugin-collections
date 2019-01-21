@@ -61,5 +61,5 @@ function get_themes_array() {
 		$themes = wp_list_pluck( $themes, 'Name' );
 	}
 
-	return $themes;
+	return ! empty( $themes ) ? $themes : [];
 }

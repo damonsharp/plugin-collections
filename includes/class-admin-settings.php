@@ -3,29 +3,29 @@
 namespace Sharp_Plugin_Collections;
 
 /**
- * Class Admin_Notices.
+ * Class Admin_Settings.
  *
  * Display admin notices.
  */
-class Admin_Notice {
+class Admin_Settings {
 
 	/**
-	 * The notice text.
-	 *
-	 * @var sting
-	 *
-	 * @since 1.0.0
-	 */
-	public $notice;
-
-	/**
-	 * The message type (error, warning, success, etc.).
+	 * The setting name.
 	 *
 	 * @var string
 	 *
 	 * @since 1.0.0
 	 */
-	public $type;
+	public $setting_name = ;
+
+	/**
+	 * The settings.
+	 *
+	 * @var array
+	 *
+	 * @since 1.0.0
+	 */
+	public $settings;
 
 	/**
 	 * Constructor.
@@ -35,8 +35,8 @@ class Admin_Notice {
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( $notice, $type = 'error' ) {
-		$this->notice = $notice;
+	public function __construct() {
+		$this->settings = get_option;
 		$this->type   = $type;
 		$this->display_notice();
 	}
