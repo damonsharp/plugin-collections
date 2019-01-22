@@ -66,7 +66,7 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 		asort( $plugin_collections );
 		foreach ( $plugin_collections as $id => $name ) {
 			// translators: %s represents the name of the plugin collection.
-			$plugin_collections[ $id ] = sprintf( __( 'Activate %s Collection Plugins', 'dwspc' ), $name );
+			$plugin_collections[ $id ] = sprintf( __( 'Activate %s Collection', 'dwspc' ), $name );
 		}
 
 		return $plugin_collections;
