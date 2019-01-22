@@ -107,6 +107,8 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 			try {
 				if ( in_array( $file, $all_plugins ) ) {
 					activate_plugin( $file );
+				} else {
+					throw new Exception( "Cannot activate plugin {$file}." );
 				}
 			} catch ( Exception $exception ) {
 				new Admin_Notice( $exception->getMessage() );
@@ -120,6 +122,8 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 		try {
 			if ( ! empty( $collection_theme ) && ! empty( $current_theme ) && $collection_theme !== $current_theme ) {
 				switch_theme( $collection_theme );
+			} else {
+				throw new Exception( "Cannot switch theme to {$collection_theme}." );
 			}
 		} catch ( Exception $exception ) {
 			new Admin_Notice( $exception->getMessage() );
