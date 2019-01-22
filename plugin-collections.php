@@ -13,7 +13,7 @@
  * @package         Plugin_Collections
  */
 
-namespace Sharp_Plugin_Collections;
+namespace DWS_Plugin_Collections;
 
 /**
  * Setup constants.

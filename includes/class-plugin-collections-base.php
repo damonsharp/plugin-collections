@@ -1,11 +1,11 @@
 <?php
 
-namespace Sharp_Plugin_Collections;
+namespace DWS_Plugin_Collections;
 
 /**
  * Class Plugin_Collections_Base
  *
- * @package Sharp_Plugin_Collections
+ * @package DWS_Plugin_Collections
  */
 class Plugin_Collections_Base {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sharp_Plugin_Collections;
+namespace DWS_Plugin_Collections;
 
 /**
  * Bulk Plugin Actions Class.

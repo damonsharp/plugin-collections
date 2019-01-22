@@ -2,10 +2,10 @@
 /**
  * Group of helper functions.
  *
- * @package Sharp_Plugin_Collections
+ * @package DWS_Plugin_Collections
  */
 
-namespace Sharp_Plugin_Collections;
+namespace DWS_Plugin_Collections;
 
 /**
  * Convert a slug into a title string.
@@ -42,7 +42,7 @@ function get_plugins_array() {
 		$plugins = wp_list_pluck( $plugins, 'Name' );
 	}
 
-	return $plugins;
+	return ! empty( $plugins ) ? $plugins : [];
 }
 
 /**

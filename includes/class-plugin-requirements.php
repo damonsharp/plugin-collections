@@ -1,6 +1,6 @@
 <?php
 
-namespace Sharp_Plugin_Collections;
+namespace DWS_Plugin_Collections;
 
 /**
  * Class Plugin_Requirements
@@ -8,7 +8,7 @@ namespace Sharp_Plugin_Collections;
  * Check plugin requirements and either continue with initialization
  * or display admin notice.
  *
- * @package Sharp_Plugin_Collections
+ * @package DWS_Plugin_Collections
  */
 class Plugin_Requirements {
 
