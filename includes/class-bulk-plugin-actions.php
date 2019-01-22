@@ -2,6 +2,8 @@
 
 namespace DWS_Plugin_Collections;
 
+use Exception;
+
 /**
  * Bulk Plugin Actions Class.
  *
@@ -106,7 +108,7 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 				if ( in_array( $file, $all_plugins ) ) {
 					activate_plugin( $file );
 				}
-			} catch ( \Exception $exception ) {
+			} catch ( Exception $exception ) {
 				new Admin_Notice( $exception->getMessage() );
 			}
 		}
@@ -119,7 +121,7 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 			if ( ! empty( $collection_theme ) && ! empty( $current_theme ) && $collection_theme !== $current_theme ) {
 				switch_theme( $collection_theme );
 			}
-		} catch ( \Exception $exception ) {
+		} catch ( Exception $exception ) {
 			new Admin_Notice( $exception->getMessage() );
 		}
 
