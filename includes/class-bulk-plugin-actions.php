@@ -23,6 +23,9 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts_and_styles' ] );
 		add_filter( 'bulk_actions-plugins', [ $this, 'modify_bulk_plugin_actions' ] );
 		add_filter( 'handle_bulk_actions-plugins', [ $this, 'process_bulk_plugin_collection' ], 10, 2 );
+		// @TODO Work out the callbacks for these. We need to update each of the posts meta data when a theme or plugin is deleted.
+		//add_action( 'delete_plugin', [ $this, 'clean_plugin_collection_plugin_list' ] );
+		//add_action( 'delete_theme', [ $this, 'clean_plugin_collection_theme_list'] );
 	}
 
 	/**
@@ -140,6 +143,45 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 	public function enqueue_scripts_and_styles() {
 		wp_enqueue_style( "{$this->plugin_slug}-admin-styles", DWSPC_DIR_URL . 'assets/css/admin.css' );
 		wp_enqueue_script( "{$this->plugin_slug}-admin-scripts", DWSPC_DIR_URL . 'assets/js/admin-scripts.js', [ 'jquery' ], null, true );
+	}
+
+	public function clean_plugin_collection_plugin_list( $plugin_file ) {
+		return $plugin_file;
+	}
+
+	public function clean_plugin_collection_theme_list( $stylesheet ) {
+		$collection_meta = $this->get_plugin_collections_data();
+
+		return $stylesheet;
+	}
+
+	protected function get_plugin_collections_data() {
+		$transient_name = 'plugin_collection_data';
+
+		//if ( false === ( $data = get_transient( $transient_name ) ) ) {
+			// Data for transient.
+			$collections = new \WP_Query(
+				[
+					'post_type' => $this->plugin_slug,
+					'posts_per_page' => 100, // it'd be crazy if there were more than this :).
+					'no_found_rows' => true,
+					'update_post_term_cache' => false,
+					'fields' => 'ids',
+				]
+			);
+
+			if ( ! empty( $collections->posts ) ) {
+				foreach ( $collections->posts as $collection_id ) {
+					$data[ $collection_id ] = get_post_meta( $collection_id, 'dws_plugin_collections', true );
+				}
+			}
+
+			// Store in transient for next time.
+			//set_transient( $transient_name, $data, MONTH_IN_SECONDS );
+
+		//}
+
+		return $data;
 	}
 
 }
