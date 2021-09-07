@@ -1,14 +1,16 @@
 <?php
 /**
- * Class SampleTest
+ * Class Plugin Collections
  *
  * @package Plugin_Collections
  */
 
+namespace DWS_Plugin_Collections\Tests;
+
 /**
- * Sample test case.
+ * @TODO: Yes, start building out unit test coverage.
  */
-class SampleTest extends WP_UnitTestCase {
+class Collections_Text extends WP_UnitTestCase {
 
 	/**
 	 * A single example test.

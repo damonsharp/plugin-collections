@@ -19,11 +19,11 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 	 *
 	 * Filter and do things.
 	 *
-	 * @param Collections_Meta $collections_meta *
+	 * @param Collections_Meta $collections_meta
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( Collections_Meta $collections_meta) {
+	public function __construct( Collections_Meta $collections_meta ) {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts_and_styles' ] );
 		add_filter( 'bulk_actions-plugins', [ $this, 'modify_bulk_plugin_actions' ] );
 		add_filter( 'handle_bulk_actions-plugins', [ $this, 'process_bulk_plugin_collection' ], 10, 2 );
@@ -45,17 +45,17 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 	 * @return array $actions
 	 */
 	public function modify_bulk_plugin_actions( array $actions ) : array {
-		$plugin_collections = get_posts(
+		$plugin_collections = new \WP_Query(
 			[
 				'post_type'      => $this->plugin_slug,
 				// @TODO Document filter.
 				'posts_per_page' => apply_filters( 'dws_plugin_collections_per_page', 100 ),
 			]
 		);
-		if ( empty( $plugin_collections ) ) {
+		if ( empty( $plugin_collections->posts ) ) {
 			return $actions;
 		}
-		$plugin_collections = wp_list_pluck( $plugin_collections, 'post_title', 'ID' );
+		$plugin_collections = wp_list_pluck( $plugin_collections->posts, 'post_title', 'ID' );
 		$plugin_collections = $this->modify_plugin_collection_name( $plugin_collections );
 
 		return array_replace( $actions, $plugin_collections );
@@ -98,20 +98,20 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 			return $redirect_url;
 		}
 
-		$plugin_collections = $this->collections_meta->get_collections_meta( $post_id, 'plugins' );
-		if ( empty( $plugin_collections ) ) {
+		$plugin_collections = $this->collections_meta->get_collections_meta( $post_id );
+		if ( empty( $plugin_collections[ 'plugins' ] ) ) {
 			return $redirect_url;
 		}
 
-		$all_plugins = $this->collections_meta->get_plugins_array();
 		// Exclude the Plugins Collection plugin from deactivation.
+		$all_plugins = $this->collections_meta->get_plugins_array();
 		unset( $all_plugins['plugin-collections/plugin-collections.php'] );
 		if ( ! empty( $all_plugins ) ) {
 			$all_plugins = array_keys( $all_plugins );
 			deactivate_plugins( $all_plugins );
 		}
 
-		foreach ( $plugin_collections as $file ) {
+		foreach ( $plugin_collections['plugins'] as $file ) {
 			// Don't try to activate a plugin that isn't already installed.
 			try {
 				if ( in_array( $file, $all_plugins ) ) {
@@ -125,12 +125,13 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 		}
 
 		// Possibly switch theme based on collection selection.
-		$collection_theme  = get_post_meta( $post_id, 'theme' );
+		$collection_theme  = $plugin_collections['theme'];
+		$current_theme = $this->get_current_theme_name();
 		try {
-			if ( ! empty( $collection_theme ) && ! empty( $current_theme ) && $collection_theme !== $$this->get_current_theme_name() ) {
+			if ( ! empty( $collection_theme ) && ! empty( $current_theme ) && $collection_theme !== $current_theme ) {
 				switch_theme( $collection_theme );
 			} else {
-				throw new Exception( "Cannot switch theme to {$collection_theme}." );
+				throw new Exception( "Theme {$collection_theme} is already activated." );
 			}
 		} catch ( Exception $exception ) {
 			new Admin_Notice( $exception->getMessage() );
@@ -152,12 +153,12 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 	/**
 	 * Process the collection plugin meta cleanup if it contains the item being deleted.
 	 *
-	 * If a plugin is deleted that is contained withing plugin collection
+	 * If a plugin is deleted that is contained within plugin collection
 	 * metadata, that item should be removed from the collection.
 	 *
-	 * @param string $filename The plugin filename from the bulk action.
+	 * @param string $filename The plugin filename.
 	 */
-	public function cleanup_collections_plugin_meta( string $filename ) {
+	public function cleanup_collections_plugin_meta( string $filename ) : void {
 		$plugin_collection_meta = $this->get_plugin_collections_data();
 		if ( empty( $plugin_collection_meta ) ) {
 			return;
@@ -177,12 +178,12 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 	/**
 	 * Process the collection theme meta cleanup if it contains the item being deleted.
 	 *
-	 * If a theme is deleted that is contained withing plugin collection
+	 * If a theme is deleted that is contained within plugin collection
 	 * metadata, that item should be removed from the collection.
 	 *
-	 * @param string $filename The theme filename from the bulk action.
+	 * @param string $filename The theme filename.
 	 */
-	public function cleanup_collections_theme_meta( string $filename ) {
+	public function cleanup_collections_theme_meta( string $filename ) : void {
 		$plugin_collection_meta = $this->get_plugin_collections_data();
 		if ( empty( $plugin_collection_meta ) ) {
 			return;
@@ -209,40 +210,33 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 	 *
 	 * @return array
 	 */
-	protected function get_plugin_collections_data() {
-		$transient_name = "{$this->plugin_slug}_collections";
+	protected function get_plugin_collections_data() : array {
+		$collections_data = [];
 
-		//if ( false === ( $data = get_transient( $transient_name ) ) ) {
-			// Data for transient.
-			$collections = new \WP_Query(
-				[
-					'post_type' => $this->plugin_slug,
-					'posts_per_page' => 100, // it'd be crazy if there were more than this :).
-					'no_found_rows' => true,
-					'update_post_term_cache' => false,
-					'fields' => 'ids'
-				]
-			);
+		$collections = new \WP_Query(
+			[
+				'post_type' => $this->plugin_slug,
+				'posts_per_page' => 100, // it'd be crazy if there were more than this :).
+				'no_found_rows' => true,
+				'update_post_term_cache' => false,
+				'fields' => 'ids'
+			]
+		);
 
-			if ( ! empty( $collections->posts ) ) {
-				foreach ( $collections->posts as $post_id ) {
-					$data[ $post_id ]['plugins'] = $this->collections_meta->get_collections_meta( $post_id, 'plugins' );
-					$data[ $post_id ]['theme'] = $this->collections_meta->get_collections_meta( $post_id, 'theme' );
-				}
+		if ( ! empty( $collections->posts ) ) {
+			foreach ( $collections->posts as $post_id ) {
+				$collections_data[ $post_id ]['plugins'] = $this->collections_meta->get_collections_meta( $post_id, 'plugins' );
+				$collections_data[ $post_id ]['theme'] = $this->collections_meta->get_collections_meta( $post_id, 'theme' );
 			}
+		}
 
-			// Store in transient for next time.
-			//set_transient( $transient_name, $data, MONTH_IN_SECONDS );
-
-		//}
-
-		return $data;
+		return $collections_data;
 	}
 
 	/**
 	 * Get current theme name.
 	 */
-	protected function get_current_theme_name() {
+	protected function get_current_theme_name() : string {
 		$current_theme_obj = wp_get_theme();
 		return $current_theme_obj->get_stylesheet();
 	}
