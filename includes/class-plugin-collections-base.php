@@ -11,8 +11,6 @@ class Plugin_Collections_Base {
 
 	protected $plugin_slug = 'dwspc';
 
-	protected $current_theme_name;
-
 	/**
 	 * Get this party started.
 	 *

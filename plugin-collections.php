@@ -30,6 +30,10 @@ if ( ! defined( 'DWSPC_INC_DIR' ) ) {
 	define( 'DWSPC_INC_DIR', trailingslashit( plugin_dir_path( __FILE__ ) . 'includes' ) );
 }
 
+if ( ! defined( 'DWSPC_TEMPLATE_DIR' ) ) {
+	define( 'DWSPC_TEMPLATE_DIR', trailingslashit( plugin_dir_path( __FILE__ ) . 'templates' ) );
+}
+
 if ( ! defined( 'DWSPC_PHP_REQUIREMENT' ) ) {
 	define( 'DWSPC_PHP_REQUIREMENT', '5.6' );
 }
