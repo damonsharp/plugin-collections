@@ -3,7 +3,9 @@ phpcs.xml
 phpunit.xml
 Thumbs.db
 wp-cli.local.yml
-node_modules/
+/node_modules/
+/vendor/
 *.sql
 *.tar.gz
 *.zip
+

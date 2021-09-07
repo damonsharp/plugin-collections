@@ -7,20 +7,20 @@ class Data_Structures extends Plugin_Collections_Base {
 	/**
 	 * The post types.
 	 *
+	 * @var array the post types.
 	 * @since 1.0.0
 	 *
-	 * @var array the post types.
 	 */
-	private $post_types = [];
+	private array $post_types = [];
 
 	/**
 	 * The taxonomies.
 	 *
+	 * @var array the post types.
 	 * @since 1.0.0
 	 *
-	 * @var array the post types.
 	 */
-	private $taxonomies = [];
+	private array $taxonomies = [];
 
 	public function __construct() {
 		$this->setup();
@@ -42,14 +42,16 @@ class Data_Structures extends Plugin_Collections_Base {
 	 */
 	public function register() {
 		foreach ( $this->post_types as $post_type_slug => $args ) {
-			$singular = ! empty( $args['singular'] ) ? $args['singular'] : titleize_slug( $post_type_slug );
+			$singular = ! empty( $args['singular'] ) ? $args['singular'] : $this->titleize_slug( $post_type_slug );
 			$plural   = ! empty( $args['plural'] ) ? $args['plural'] : $singular . 's';
 			$supports = ! empty( $args['supports'] ) ? $args['supports'] : [];
 
 			register_post_type(
-				$post_type_slug, wp_parse_args(
+				$post_type_slug,
+				wp_parse_args(
 					[
-						'description'           => __( 'Custom post type.', 'dwspc' ),
+						'description'           => __( 'Custom post type.',
+						                               'dwspc' ),
 						'public'                => true,
 						'exclude_from_search'   => true,
 						'publicly_queryable'    => false,
@@ -102,34 +104,38 @@ class Data_Structures extends Plugin_Collections_Base {
 							'items_list'             => null,
 							'name_admin_bar'         => null,
 						],
-					], $args
+					],
+					$args
 				)
 			);
 		}
 
 		foreach ( $this->taxonomies as $taxonomy => $args ) {
-			$singular = ( ! empty( $args['singular'] ) ) ? $args['singular'] : Helpers::titleize_slug( $taxonomy );
+			$singular = ( ! empty( $args['singular'] ) ) ? $args['singular'] : $this->titleize_slug( $taxonomy );
 			$plural   = ( ! empty( $args['plural'] ) ) ? $args['plural'] : $singular . 's';
 
 			register_taxonomy(
-				$taxonomy, $args['post_type'], wp_parse_args(
-					$args, [
+				$taxonomy,
+				$args['post_type'],
+				wp_parse_args(
+					$args,
+					[
 						'labels' => [
 							'name'                       => $plural,
 							'singular_name'              => $singular,
-							'search_items'               => 'Search ' . $plural,
-							'popular_items'              => 'Popular ' . $plural,
-							'all_items'                  => 'All ' . $plural,
-							'parent_item'                => 'Parent ' . $singular,
-							'parent_item_colon'          => "Parent {$singular}:",
-							'edit_item'                  => 'Edit ' . $singular,
-							'update_item'                => 'Update ' . $singular,
-							'add_new_item'               => 'Add New ' . $singular,
-							'new_item_name'              => "New {$singular} Name",
-							'separate_items_with_commas' => "Separate {$plural} with commas",
-							'add_or_remove_items'        => "Add or remove {$plural}",
-							'choose_from_most_used'      => "Choose from the most used {$plural}",
-							'not_found'                  => "No {$plural} found.",
+							'search_items'               => "Search $plural",
+							'popular_items'              => "Popular $plural",
+							'all_items'                  => "All $plural",
+							'parent_item'                => "Parent $singular",
+							'parent_item_colon'          => "Parent $singular:",
+							'edit_item'                  => "Edit $singular",
+							'update_item'                => "Update $singular",
+							'add_new_item'               => "Add New $singular",
+							'new_item_name'              => "New $singular Name",
+							'separate_items_with_commas' => "Separate $plural with commas",
+							'add_or_remove_items'        => "Add or remove $plural",
+							'choose_from_most_used'      => "Choose from the most used $plural",
+							'not_found'                  => "No $plural found.",
 							'menu_name'                  => $plural,
 						],
 					]
@@ -141,25 +147,47 @@ class Data_Structures extends Plugin_Collections_Base {
 	/**
 	 * Add the post type and its args to the array.
 	 *
+	 * @param string $type the post type.
+	 * @param array  $args array of post type args.
+	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $type the post type type.
-	 * @param array  $args array of post type args.
 	 */
-	public function add_post_type( $type, $args ) {
+	public function add_post_type( string $type, array $args ) {
 		$this->post_types[ $type ] = $args;
 	}
 
 	/**
 	 * Add the taxonomy to the array.
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param string $taxonomy the taxonomy type.
 	 * @param array  $args     array of taxonomy args.
+	 *
+	 * @since 1.0.0
+	 *
 	 */
-	public function add_taxonomy( $taxonomy, $args ) {
+	public function add_taxonomy( string $taxonomy, array $args ) {
 		$this->taxonomies[ $taxonomy ] = $args;
+	}
+
+	/**
+	 * Convert a slug into a title string.
+	 *
+	 * @param string $slug       The slug.
+	 * @param bool   $capitalize Should the titme be capitalized.
+	 *
+	 * @return string Title created from slug.
+	 * @since 1.0.0
+	 *
+	 */
+	protected function titleize_slug( string $slug, bool $capitalize = true )
+	: string {
+		$title = str_replace( [ '_', '-' ], ' ', $slug );
+		if ( $capitalize ) {
+			$title = ucfirst( $title );
+		}
+
+		return $title;
 	}
 
 }

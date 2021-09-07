@@ -38,15 +38,15 @@ if ( ! defined( 'DWSPC_WP_REQUIREMENT' ) ) {
 	define( 'DWSPC_WP_REQUIREMENT', '4.9' );
 }
 
-// Load the requirements class.
-require_once DWSPC_INC_DIR . 'class-plugin-requirements.php';
+// Autoload the plugin's classes.
+require_once 'vendor/autoload.php';
 
-function dwspc_check_plugin_requirements() {
+function check_plugin_requirements() {
 
 	// Check plugin requirements.
 	$requirements = new Plugin_Requirements( [
 		'plugin_name'        => 'Plugin Collections',
-		'php_version'        => '5.6',
+		'php_version'        => '7.0',
 		'wp_version'         => '4.9',
 		'plugin_file'        => __FILE__,
 		'php_server_version' => phpversion(),
@@ -55,21 +55,15 @@ function dwspc_check_plugin_requirements() {
 
 	if ( $requirements->plugin_requirements_met() ) {
 
-		add_action( 'plugins_loaded', function () {
-			require_once DWSPC_INC_DIR . 'functions.php';
-			require_once DWSPC_INC_DIR . 'class-plugin-collections-base.php';
-			require_once DWSPC_INC_DIR . 'class-data-structures.php';
-			require_once DWSPC_INC_DIR . 'class-post-types.php';
-			require_once DWSPC_INC_DIR . 'class-bulk-plugin-actions.php';
-
+		add_action( 'after_setup_theme', function () {
 			/**
 			 * Get things started.
 			 */
 			( new Plugin_Collections_Base() )->init();
-
-		}, 99 );
+		} );
 
 	}
 }
 
-dwspc_check_plugin_requirements();
+// Let's kick it.
+check_plugin_requirements();

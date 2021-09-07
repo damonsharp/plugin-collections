@@ -11,14 +11,18 @@ class Plugin_Collections_Base {
 
 	protected $plugin_slug = 'dwspc';
 
+	protected $current_theme_name;
+
 	/**
 	 * Get this party started.
 	 *
 	 * @return void
 	 */
 	public function init() {
-		new Post_Types();
-		new Bulk_Plugin_Actions();
+		$data_structures  = new Data_Structures();
+		$collections_meta = new Collections_Meta();
+		new Post_Types( $data_structures, $collections_meta );
+		new Bulk_Plugin_Actions( $collections_meta );
 	}
 
 }

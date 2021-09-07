@@ -12,11 +12,11 @@ class Admin_Notice {
 	/**
 	 * The notice text.
 	 *
-	 * @var sting
+	 * @var string
 	 *
 	 * @since 1.0.0
 	 */
-	public $notice;
+	public string $notice;
 
 	/**
 	 * The message type (error, warning, success, etc.).
@@ -25,7 +25,7 @@ class Admin_Notice {
 	 *
 	 * @since 1.0.0
 	 */
-	public $type;
+	public string $type;
 
 	/**
 	 * Constructor.
@@ -35,7 +35,7 @@ class Admin_Notice {
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( $notice, $type = 'error' ) {
+	public function __construct( string $notice, string $type = 'error' ) {
 		$this->notice = $notice;
 		$this->type   = $type;
 		$this->display_notice();

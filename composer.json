@@ -1,0 +1,18 @@
+{
+    "name": "damonsharp/plugin-collections",
+    "description": "WordPress plugin that allows for storage of plugins collections to be stored and activated easily. Handy for QA testing of a variety of plugin combinations.",
+    "type": "project",
+    "license": "GLP2+",
+    "authors": [
+        {
+            "name": "Damon Sharp",
+            "email": "damon.sharp@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+      "classmap": [
+        "includes"
+      ]
+    }
+}

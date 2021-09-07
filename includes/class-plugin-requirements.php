@@ -73,7 +73,7 @@ class Plugin_Requirements {
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( $args ) {
+	public function __construct( array $args ) {
 		foreach ( $args as $key => $value ) {
 			$this->{$key} = $value;
 		}
@@ -85,9 +85,9 @@ class Plugin_Requirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public function plugin_requirements_met() {
+	public function plugin_requirements_met() : bool {
 		$plugin_requirements_met = $this->php_requirement_met() && $this->wp_requirement_met();
 		if ( ! $plugin_requirements_met ) {
 			add_action( 'admin_notices', [ $this, 'deactivate' ], 99 );
@@ -112,9 +112,9 @@ class Plugin_Requirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public function php_requirement_met() {
+	public function php_requirement_met() : bool {
 		if ( $this->version_compare( $this->php_server_version, $this->php_version ) ) {
 			return true;
 		} else {
@@ -125,7 +125,7 @@ class Plugin_Requirements {
 	}
 
 	/**
-	 * Notice copy for when PHP versions requirmenet is not met.
+	 * Notice copy for when PHP versions requirement is not met.
 	 *
 	 * @since 1.0.0
 	 */
@@ -139,9 +139,9 @@ class Plugin_Requirements {
 	/**
 	 * Check if the WP version requirement is met.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public function wp_requirement_met() {
+	public function wp_requirement_met() : bool {
 		if ( $this->version_compare( $this->wp_server_version, $this->wp_version ) ) {
 			return true;
 		} else {
@@ -171,7 +171,7 @@ class Plugin_Requirements {
 	 *
 	 * @return bool
 	 */
-	private function version_compare( $running_version, $required_version ) {
+	private function version_compare( string $running_version, string $required_version ) : bool {
 		return version_compare( $running_version, $required_version, '>=' );
 	}
 
