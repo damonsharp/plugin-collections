@@ -9,6 +9,7 @@
  * Text Domain:     dwspc
  * Domain Path:     /languages
  * Version:         1.1.0
+ * Tested up to:    6.6
  *
  * @package         Plugin_Collections
  */
