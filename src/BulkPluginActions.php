@@ -1,6 +1,6 @@
 <?php
 
-namespace DWS_Plugin_Collections;
+namespace DWSPluginCollections;
 
 use Exception;
 
@@ -10,20 +10,20 @@ use Exception;
  * Makes modifications to the default plugins bulk actions list,
  * adding items to activate individual plugins collections.
  */
-class Bulk_Plugin_Actions extends Plugin_Collections_Base {
+class BulkPluginActions extends PluginCollectionsBase {
 
-	private Collections_Meta $collections_meta;
+	private CollectionsMeta $collections_meta;
 
 	/**
 	 * Constructor.
 	 *
 	 * Filter and do things.
 	 *
-	 * @param Collections_Meta $collections_meta
+	 * @param CollectionsMeta $collections_meta
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( Collections_Meta $collections_meta ) {
+	public function __construct( CollectionsMeta $collections_meta ) {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts_and_styles' ] );
 		add_filter( 'bulk_actions-plugins', [ $this, 'modify_bulk_plugin_actions' ] );
 		add_filter( 'handle_bulk_actions-plugins', [ $this, 'process_bulk_plugin_collection' ], 10, 2 );
@@ -120,7 +120,7 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 					throw new Exception( "Cannot activate plugin {$file}." );
 				}
 			} catch ( Exception $exception ) {
-				new Admin_Notice( $exception->getMessage() );
+				new AdminNotice( $exception->getMessage() );
 			}
 		}
 
@@ -134,7 +134,7 @@ class Bulk_Plugin_Actions extends Plugin_Collections_Base {
 				throw new Exception( "Theme {$collection_theme} is already activated." );
 			}
 		} catch ( Exception $exception ) {
-			new Admin_Notice( $exception->getMessage() );
+			new AdminNotice( $exception->getMessage() );
 		}
 
 		return admin_url( 'plugins.php' );

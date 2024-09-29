@@ -1,8 +1,8 @@
 <?php
 
-namespace DWS_Plugin_Collections;
+namespace DWSPluginCollections;
 
-class Data_Structures extends Plugin_Collections_Base {
+class DataStructures extends PluginCollectionsBase {
 
 	/**
 	 * The post types.

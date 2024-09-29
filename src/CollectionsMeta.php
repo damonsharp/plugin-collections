@@ -1,8 +1,8 @@
 <?php
 
-namespace DWS_Plugin_Collections;
+namespace DWSPluginCollections;
 
-class Collections_Meta extends Plugin_Collections_Base {
+class CollectionsMeta extends PluginCollectionsBase {
 
 	/**
 	 * Get an array of plugins, keyed by "Name".

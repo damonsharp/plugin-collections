@@ -6,20 +6,36 @@ namespace Composer\Autoload;
 
 class ComposerStaticInita395768bce2a29f5097b1ce554e1a8a3
 {
+    public static $prefixLengthsPsr4 = array (
+        'D' => 
+        array (
+            'DWSPluginCollections\\' => 21,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'DWSPluginCollections\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'DWS_Plugin_Collections\\Admin_Notice' => __DIR__ . '/../..' . '/includes/class-admin-notice.php',
-        'DWS_Plugin_Collections\\Bulk_Plugin_Actions' => __DIR__ . '/../..' . '/includes/class-bulk-plugin-actions.php',
-        'DWS_Plugin_Collections\\Collections_Meta' => __DIR__ . '/../..' . '/includes/class-collections-meta.php',
-        'DWS_Plugin_Collections\\Data_Structures' => __DIR__ . '/../..' . '/includes/class-data-structures.php',
-        'DWS_Plugin_Collections\\Plugin_Collections_Base' => __DIR__ . '/../..' . '/includes/class-plugin-collections-base.php',
-        'DWS_Plugin_Collections\\Plugin_Requirements' => __DIR__ . '/../..' . '/includes/class-plugin-requirements.php',
-        'DWS_Plugin_Collections\\Post_Types' => __DIR__ . '/../..' . '/includes/class-post-types.php',
+        'DWSPluginCollections\\AdminNotice' => __DIR__ . '/../..' . '/src/AdminNotice.php',
+        'DWSPluginCollections\\BulkPluginActions' => __DIR__ . '/../..' . '/src/BulkPluginActions.php',
+        'DWSPluginCollections\\CollectionsMeta' => __DIR__ . '/../..' . '/src/CollectionsMeta.php',
+        'DWSPluginCollections\\DataStructures' => __DIR__ . '/../..' . '/src/DataStructures.php',
+        'DWSPluginCollections\\PluginCollectionsBase' => __DIR__ . '/../..' . '/src/PluginCollectionsBase.php',
+        'DWSPluginCollections\\PluginRequirements' => __DIR__ . '/../..' . '/src/PluginRequirements.php',
+        'DWSPluginCollections\\PostTypes' => __DIR__ . '/../..' . '/src/PostTypes.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInita395768bce2a29f5097b1ce554e1a8a3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita395768bce2a29f5097b1ce554e1a8a3::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInita395768bce2a29f5097b1ce554e1a8a3::$classMap;
 
         }, null, ClassLoader::class);

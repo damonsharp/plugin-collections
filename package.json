@@ -1,19 +1,15 @@
 {
   "name": "plugin-collections",
   "version": "1.0.0",
-  "main": "Gruntfile.js",
+  "type": "module",
   "author": "Damon Sharp",
   "scripts": {
     "dev": "npm run development",
-    "development": "mix",
-    "watch": "mix watch",
-    "watch-poll": "mix watch -- --watch-options-poll=1000",
-    "hot": "mix watch --hot",
-    "prod": "npm run production",
-    "production": "mix --production"
-
+    "development": "vite",
+    "preview": "vite preview",
+    "build": "vite build"
   },
   "devDependencies": {
-    "laravel-mix": "^6.0.29"
+    "vite": "^5.4.8"
   }
 }

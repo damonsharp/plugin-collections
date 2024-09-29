@@ -14,7 +14,7 @@
  * @package         Plugin_Collections
  */
 
-namespace DWS_Plugin_Collections;
+namespace DWSPluginCollections;
 
 /**
  * Setup constants.
@@ -27,8 +27,8 @@ if ( ! defined( 'DWSPC_DIR_URL' ) ) {
 	define( 'DWSPC_DIR_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 }
 
-if ( ! defined( 'DWSPC_INC_DIR' ) ) {
-	define( 'DWSPC_INC_DIR', trailingslashit( plugin_dir_path( __FILE__ ) . 'includes' ) );
+if ( ! defined( 'DWSPC_SRC_DIR' ) ) {
+	define( 'DWSPC_SRC_DIR', trailingslashit( plugin_dir_path( __FILE__ ) . 'src' ) );
 }
 
 if ( ! defined( 'DWSPC_TEMPLATE_DIR' ) ) {
@@ -49,7 +49,7 @@ require_once 'vendor/autoload.php';
 function check_plugin_requirements() {
 
 	// Check plugin requirements.
-	$requirements = new Plugin_Requirements( [
+	$requirements = new PluginRequirements( [
 		'plugin_name'        => 'Plugin Collections',
 		'php_version'        => '7.0',
 		'wp_version'         => '4.9',
@@ -64,7 +64,7 @@ function check_plugin_requirements() {
 			/**
 			 * Get things started.
 			 */
-			( new Plugin_Collections_Base() )->init();
+			( new PluginCollectionsBase() )->init();
 		} );
 
 	}

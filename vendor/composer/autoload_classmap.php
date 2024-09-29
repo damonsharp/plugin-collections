@@ -7,11 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'DWS_Plugin_Collections\\Admin_Notice' => $baseDir . '/includes/class-admin-notice.php',
-    'DWS_Plugin_Collections\\Bulk_Plugin_Actions' => $baseDir . '/includes/class-bulk-plugin-actions.php',
-    'DWS_Plugin_Collections\\Collections_Meta' => $baseDir . '/includes/class-collections-meta.php',
-    'DWS_Plugin_Collections\\Data_Structures' => $baseDir . '/includes/class-data-structures.php',
-    'DWS_Plugin_Collections\\Plugin_Collections_Base' => $baseDir . '/includes/class-plugin-collections-base.php',
-    'DWS_Plugin_Collections\\Plugin_Requirements' => $baseDir . '/includes/class-plugin-requirements.php',
-    'DWS_Plugin_Collections\\Post_Types' => $baseDir . '/includes/class-post-types.php',
+    'DWSPluginCollections\\AdminNotice' => $baseDir . '/src/AdminNotice.php',
+    'DWSPluginCollections\\BulkPluginActions' => $baseDir . '/src/BulkPluginActions.php',
+    'DWSPluginCollections\\CollectionsMeta' => $baseDir . '/src/CollectionsMeta.php',
+    'DWSPluginCollections\\DataStructures' => $baseDir . '/src/DataStructures.php',
+    'DWSPluginCollections\\PluginCollectionsBase' => $baseDir . '/src/PluginCollectionsBase.php',
+    'DWSPluginCollections\\PluginRequirements' => $baseDir . '/src/PluginRequirements.php',
+    'DWSPluginCollections\\PostTypes' => $baseDir . '/src/PostTypes.php',
 );

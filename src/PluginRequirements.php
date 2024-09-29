@@ -1,16 +1,16 @@
 <?php
 
-namespace DWS_Plugin_Collections;
+namespace DWSPluginCollections;
 
 /**
- * Class Plugin_Requirements
+ * Class PluginRequirements
  *
  * Check plugin requirements and either continue with initialization
  * or display admin notice.
  *
- * @package DWS_Plugin_Collections
+ * @package DWSPluginCollections
  */
-class Plugin_Requirements {
+class PluginRequirements {
 
 	/**
 	 * Plugin name.
@@ -77,7 +77,7 @@ class Plugin_Requirements {
 		foreach ( $args as $key => $value ) {
 			$this->{$key} = $value;
 		}
-		require_once DWSPC_INC_DIR . 'class-admin-notice.php';
+		require_once DWSPC_SRC_DIR . 'AdminNotice.php';
 	}
 
 	/**
@@ -130,7 +130,7 @@ class Plugin_Requirements {
 	 * @since 1.0.0
 	 */
 	public function php_requirement_notice() {
-		new Admin_Notice(
+		new AdminNotice(
 			// translators: PHP version number requirement message.
 			sprintf( __( '%1$s requires PHP version %2$s+. You are running version %3$s. Please discuss upgrade options with your hosting provider. WordPress recommends PHP version 7+.', 'dwspc' ), $this->plugin_name, $this->php_version, $this->php_server_version )
 		);
@@ -157,7 +157,7 @@ class Plugin_Requirements {
 	 * @return void
 	 */
 	public function wp_requirement_notice() {
-		new Admin_Notice(
+		new AdminNotice(
 			// translators: WordPress version number requirement message.
 			sprintf( __( '%1$s requires WP version %2$s+. You are running WordPress version %3$s. Please upgrade and reactivate.', 'dwspc' ), $this->plugin_name, $this->wp_version, $this->wp_server_version )
 		);
