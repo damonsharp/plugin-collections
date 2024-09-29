@@ -1,31 +1,31 @@
 <?php
 
-namespace DWS_Plugin_Collections;
+namespace DWSPluginCollections;
 
 /**
  * Plugin Collections Post Type class.
  *
  * Set up post types and related data structures.
  */
-class Post_Types extends Plugin_Collections_Base {
+class PostTypes extends PluginCollectionsBase {
 
 	/**
 	 * Collections Meta object.
 	 *
-	 * @var Collections_Meta
+	 * @var CollectionsMeta
 	 *
 	 * @since 1.0.0
 	 */
-	public Collections_Meta $collections_meta;
+	public CollectionsMeta $collections_meta;
 
 	/**
 	 * Data structures object.
 	 *
-	 * @var Data_Structures
+	 * @var DataStructures
 	 *
 	 * @since 1.0.0
 	 */
-	public Data_Structures $data_structures;
+	public DataStructures $data_structures;
 
 	/**
 	 * List of installed plugins.
@@ -46,14 +46,14 @@ class Post_Types extends Plugin_Collections_Base {
 	public array $themes_list;
 
 	/**
-	 * Post_Types constructor.
+	 * PostTypes constructor.
 	 *
-	 * @param \DWS_Plugin_Collections\Data_Structures  $data_structures
-	 * @param \DWS_Plugin_Collections\Collections_Meta $collections_meta
+	 * @param \DWSPluginCollections\DataStructures  $data_structures
+	 * @param \DWSPluginCollections\CollectionsMeta $collections_meta
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( Data_Structures $data_structures, Collections_Meta $collections_meta ) {
+	public function __construct( DataStructures $data_structures, CollectionsMeta $collections_meta ) {
 		$this->collections_meta = $collections_meta;
 		$this->data_structures  = $data_structures;
 		$this->plugins_list     = $this->collections_meta->get_plugins_array();

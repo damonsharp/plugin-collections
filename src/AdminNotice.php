@@ -1,13 +1,13 @@
 <?php
 
-namespace DWS_Plugin_Collections;
+namespace DWSPluginCollections;
 
 /**
- * Class Admin_Notices.
+ * Class AdminNotices.
  *
  * Display admin notices.
  */
-class Admin_Notice {
+class AdminNotice {
 
 	/**
 	 * The notice text.
