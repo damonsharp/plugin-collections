@@ -3,8 +3,8 @@ Contributors: damonsharp
 Tags: tools, plugins, collections
 Requires at least: 4.9
 Requires PHP: 5.6
-Tested up to: 5.0
-Stable tag: 1.0.0
+Tested up to: 6.6
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,3 +49,15 @@ To upgrade this plugin use the upgrade link from the WordPress admin's plugin pa
 == Changelog ==
 = 1.0.0 =
 * Initial release.
+
+= 1.1.0 - September 7, 2021 =
+* Refactored entire plugin.
+* Add unit testing scaffolding (yes, I know, testing is needed -- working on that).
+* Add ability to revert a plugin collection's theme to the currently activated theme when deleting a theme contained within a collection.
+* Prefixed the plugin collection's bulk action list items titles.
+* Added asset compiling through Laravel Mix.
+
+= 1.2.0 - September 28, 2024 =
+* Refactored composer class autoloading to PSR-4.
+* Refactored asset compiling from Laravel Mix to Vite.
+* Refactored jQuery to vanilla.
